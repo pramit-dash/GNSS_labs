@@ -1,0 +1,130 @@
+;Rxx Option File
+
+;Input
+UseDevice,                                            = 1
+ActiveDeviceIndex,                                    = 0
+UseIFDataFile,                                        = 0
+IFDataFileName, (full path)                           = 
+IsThirdPartyIFDataFile,                               = 0
+ThirdParty_IFSampleFormat,                            = -1
+ThirdParty_IntermediateFrequency, (Hz)                = 0.000000
+ThirdParty_SamplingFrequency, (Hz)                    = 0.000000
+ThirdParty_IsIFSpectrumMirrored,                      = 0
+RunTime,                                              = 0.100
+UseExternalSignalInjection, (bool)                    = 0
+ExternalSignalInjection_FileName,                     = 
+ExternalSignalInjection_LoopFile, (bool)              = 0
+ExternalSignalInjection_PreCombinationFactor,         = 0
+
+;Aiding
+UsePCClockForReferenceTime,                           = 1
+ReferenceGPSWeek, 0-1024+ (weeks)                     = 1979
+ReferenceGPSTimeOfWeek, 0-604800 (s)                  = 481649.390
+ReferencePositionLabel, (string)                      = 
+ReferenceLatitude, (degrees)                          = 0.0000000000
+ReferenceLongitude, (degrees)                         = 0.0000000000
+ReferenceHeight, (m)                                  = 0.000
+AlmanacFile, (full path)                              = 
+EphemerisFile, (full path)                            = 
+KlobucharFile, (full path)                            = 
+ChannelAidingFile, (full path)                        = 
+
+;Navigation
+UpdateRate, (Hz)                                      = 2.00
+ElevationMask, (degrees)                              = 5.0
+UseClockAdjust, (bool)                                = 0
+CarrierSmoothingInterval, whole number (s)            = 100
+UseIonoCorrection, (bool)                             = 1
+UseTropoCorrection, (bool)                            = 1
+UseFaultDetection, (BOOL )                            = 1
+UseHeightConstraintForFirstFix, (BOOL )               = 1
+UseHeightConstraintFor2DNav, (BOOL )                  = 1
+UseFixedHeightConstraint, (bool)                      = 0
+HeightConstraint, (m)                                 = 0.0000
+HeightConstraintStdev, (m)                            = 1.000
+UseHeightConstraintBasedOnPDOP, (bool)                = 1
+PDOPMask_For_HeightConstraint, (unitless)             = 5.00
+FixPositionToReference, (bool)                        = 0
+UseNavigationFilter, (bool)                           = 0
+MaxGDOP, (unitless)                                   = 10.0
+Cutoff_CNo, (dB-Hz)                                   = 28.0
+
+;Output
+SRXTX_UseFileOutput, (bool)                           = 0
+SRXTX_AllowFileOverwrite, of a previous file (bool)   = 1
+SRXTX_OutputMessageFileName, (full path)              = 
+SRXTX_OutputMessages, ID's (-1 invalid)               = 255
+SRXTX_UseSerialPortOutput, (bool)                     = 0
+SRXTX_ComPort, (COM1,COM2,etc)                        = COM1
+SRXTX_ComPort_Baud, (4800,9600,etc)                   = 115200
+SRXTX_ComPort_ByteSize, (4,5,6,7,8)                   = 8
+SRXTX_ComPort_StopBits, (1,1.5,2)                     = 1.0
+SRXTX_ComPort_Parity, (None,Odd,Even,Mark)            = None
+SRXTX_ComPort_FlowControl, (None,Xon/Xoff,Hardware)   = None
+
+NMEA_UseFileOutput, (bool)                            = 0
+NMEA_AllowFileOverwrite, of a previous file (bool)    = 1
+NMEA_UseSerialPortOutput, (bool)                      = 0
+NMEA_OutputMessageFileName, (full path)               = 
+NMEA_ComPort, (COM1,COM2,etc)                         = COM2
+NMEA_ComPort_Baud, (4800,9600,etc)                    = 9600
+NMEA_ComPort_ByteSize, (4,5,6,7,8)                    = 8
+NMEA_ComPort_StopBits, (1,1.5,2)                      = 1.0
+NMEA_ComPort_Parity, (None,Odd,Even,Mark)             = None
+NMEA_ComPort_FlowControl, (None,Xon/Xoff,Hardware)    = None
+
+
+;SBAS
+UseSBASRanging                                        = 0
+EnableTrackingWAAS                                    = 1
+EnableTrackingEGNOS                                   = 1
+EnableTrackingESTB                                    = 1
+EnableTrackingMSAS                                    = 1
+UseSBASCorrections                                    = 0
+UseSBASFastCorrections                                = 1
+UseSBASIntegrity                                      = 0
+UseSBASIonosphericCorrection                          = 1
+UseSBASLongTermCorrections                            = 1
+UseSBASTroposphericCorrections                        = 1
+SBAS_Mode                                             = 1
+SBAS_System                                           = 0
+UseSBASRejections                                     = 0
+IgnoreMessageTypeZero                                 = 0
+
+;IF Data Recording
+IF_Recording_Enable                                   = 1
+IF_Recording_FileName                                 = C:\Documents and Settings\R30 User\My Documents\GNSS_Lab\group2\Week1979_tow482451.bin
+IF_Recording_CollectAll                               = 1
+IF_Recording_BitsPerSample                            = 4
+IF_Recording_StartGPSTimeOfWeek                       = 482509.000
+IF_Recording_StartGPSWeek                             = 1979
+IF_Recording_StopGPSTimeOfWeek                        = 482509.000
+IF_Recording_StopGPSWeek                              = 1979
+IF_Recording_BufferSizeInMB                           = 100
+IF_Recording_AllowOverwrite                           = 0
+
+;Baseband
+NumberOfChannels,                                     = 6
+UseFirstChannelSettingsForAllChannels,                = 1
+UsePreconfiguredAcqEngine                             = 1
+UseExternalCodeCarrierLoops                           = 0
+
+Channel00_FrequencyBinSize, (Hz)                      = 100.000000
+Channel00_CoherentAcqTime, (ms)                       = 10
+Channel00_NrNonCoherentBlocks,                        = 0
+Channel00_CarrierLoopBandwidth, (Hz)                  = 18.000000
+Channel00_CodeLoopBandwidth, (Hz)                     = 0.500000
+Channel00_CoherentCodeTrackingTime, (ms)              = 20
+Channel00_CoherentCarrierTrackingTime, (ms)           = 10
+Channel00_CarrierAidingFactor, (0.0-1.0)              = 0.000000
+Channel00_UseFllAiding, (bool)                        = 0
+Channel00_RangeCodeType, (0 GPSL1CA, 1 L1SBAS)        = 0
+Channel00_MaximumDopplerFrequency, (Hz)               = 6000.000000
+Channel00_UseCustomNrBins, (bool)                     = 1
+Channel00_NrCustomAcqBins,                            = 100
+Channel00_CorrelatorType,                             = 0
+Channel00_earlyLateDelay,                             = 0.3750091644
+Channel00_ChannelType, (0 normal, 1 master, 2 slave)  = 0
+Channel00_AssignedPrn, (0 auto, e.g. 1-32 for GPS)    = 0
+Channel00_SlaveToChannelIndex, (0 not slaved)         = 0
+Channel00_AntennaIndex,                               = 0
