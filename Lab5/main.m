@@ -78,17 +78,16 @@ ylabel('Number of Occurence')
 initialization = regexp(F_40,'14.2000014','match','once');
 init = str2double(initialization);
 ix = find(init==14.2000014);
-period_2_ix = ix(2);
 
-figure(2)
-period_1_sats = sats(1:period_2_ix);
+figure(1)
+period_1_sats = sats(ix(1):ix(2));
 histogram(period_1_sats)
 title('Number of Tracked Satellites - Period 1')
 xlabel('Number of Satellites')
 ylabel('Number of Occurence')
 
-figure(3)
-period_2_sats = sats(period_2_ix:length(sats));
+figure(2)
+period_2_sats = sats(ix(2):length(sats));
 histogram(period_2_sats)
 title('Number of Tracked Satellites - Period 2')
 xlabel('Number of Satellites')
