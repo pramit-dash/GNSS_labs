@@ -92,3 +92,22 @@ histogram(period_2_sats)
 title('Number of Tracked Satellites - Period 2')
 xlabel('Number of Satellites')
 ylabel('Number of Occurence')
+
+%% ------------ range rates ----------------
+range_rates_PRN1 = str2double(extractBetween(F_62(22:length(F_62)),64,73));
+range_rates_PRN2 = str2double(extractBetween(F_62(22:length(F_62)),111,120));
+range_rates_PRN3 = str2double(extractBetween(F_62(22:length(F_62)),158,167));
+range_rates_PRN4 = str2double(extractBetween(F_62(22:length(F_62)),205,214));
+range_rates_PRN5 = str2double(extractBetween(F_62(22:length(F_62)),252,261));
+range_rates_PRN6 = str2double(extractBetween(F_62(22:length(F_62)),299,308));
+range_rates_PRN7 = str2double(extractBetween(F_62(22:length(F_62)),346,355));
+range_rates_PRN8 = str2double(extractBetween(F_62(22:length(F_62)),393,402));
+range_rates_PRN9 = str2double(extractBetween(F_62(22:length(F_62)),440,449));
+range_rates_PRN10 = str2double(extractBetween(F_62(22:length(F_62)),487,496));
+range_rates_PRN11 = str2double(extractBetween(F_62(22:length(F_62)),534,543));
+range_rates_PRN12 = str2double(extractBetween(F_62(22:length(F_62)),581,590));
+
+range_rates = [range_rates_PRN1 range_rates_PRN2 range_rates_PRN3...
+    range_rates_PRN4 range_rates_PRN5 range_rates_PRN6 range_rates_PRN7...
+    range_rates_PRN8 range_rates_PRN9 range_rates_PRN10 range_rates_PRN11...
+    range_rates_PRN12];
