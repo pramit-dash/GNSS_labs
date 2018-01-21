@@ -94,30 +94,26 @@ xlabel('Number of Satellites')
 ylabel('Number of Occurence')
 
 %% ------------ range rates ----------------
-range_rates_PRN1 = str2double(extractBetween(F_62(22:length(F_62)),64,73));
-range_rates_PRN2 = str2double(extractBetween(F_62(22:length(F_62)),111,120));
-range_rates_PRN3 = str2double(extractBetween(F_62(22:length(F_62)),158,167));
-range_rates_PRN4 = str2double(extractBetween(F_62(22:length(F_62)),205,214));
-range_rates_PRN5 = str2double(extractBetween(F_62(22:length(F_62)),252,261));
-range_rates_PRN6 = str2double(extractBetween(F_62(22:length(F_62)),299,308));
-range_rates_PRN7 = str2double(extractBetween(F_62(22:length(F_62)),346,355));
-range_rates_PRN8 = str2double(extractBetween(F_62(22:length(F_62)),393,402));
-range_rates_PRN9 = str2double(extractBetween(F_62(22:length(F_62)),440,449));
-range_rates_PRN10 = str2double(extractBetween(F_62(22:length(F_62)),487,496));
-range_rates_PRN11 = str2double(extractBetween(F_62(22:length(F_62)),534,543));
-range_rates_PRN12 = str2double(extractBetween(F_62(22:length(F_62)),581,590));
+range_rates_ch1 = str2double(extractBetween(F_62(22:length(F_62)),64,73));
+range_rates_ch2 = str2double(extractBetween(F_62(22:length(F_62)),111,120));
+range_rates_ch3 = str2double(extractBetween(F_62(22:length(F_62)),158,167));
+range_rates_ch4 = str2double(extractBetween(F_62(22:length(F_62)),205,214));
+range_rates_ch5 = str2double(extractBetween(F_62(22:length(F_62)),252,261));
+range_rates_ch6 = str2double(extractBetween(F_62(22:length(F_62)),299,308));
+range_rates_ch7 = str2double(extractBetween(F_62(22:length(F_62)),346,355));
+range_rates_ch8 = str2double(extractBetween(F_62(22:length(F_62)),393,402));
+range_rates_ch9 = str2double(extractBetween(F_62(22:length(F_62)),440,449));
+range_rates_ch10 = str2double(extractBetween(F_62(22:length(F_62)),487,496));
+range_rates_ch11 = str2double(extractBetween(F_62(22:length(F_62)),534,543));
+range_rates_ch12 = str2double(extractBetween(F_62(22:length(F_62)),581,590));
 
-range_rates = [range_rates_PRN1 range_rates_PRN2 range_rates_PRN3...
-    range_rates_PRN4 range_rates_PRN5 range_rates_PRN6 range_rates_PRN7...
-    range_rates_PRN8 range_rates_PRN9 range_rates_PRN10 range_rates_PRN11...
-    range_rates_PRN12];
+range_rates = [range_rates_ch1 range_rates_ch2 range_rates_ch3...
+    range_rates_ch4 range_rates_ch5 range_rates_ch6 range_rates_ch7...
+    range_rates_ch8 range_rates_ch9 range_rates_ch10 range_rates_ch11...
+    range_rates_ch12];
 
 figure(4)
-plot(range_rates_PRN02)
-title('Range-rates for PRN02')
+plot(range_rates_ch2)
+title('Range-rates for Channel 2')
 xlabel('Number of Observations')
 ylabel('Range-rates [m/s]')
-
-% Doppler Computation
-f0 = 1575.42 * 10^(6);
-c = 299792458;
