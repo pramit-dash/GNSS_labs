@@ -111,3 +111,13 @@ range_rates = [range_rates_PRN1 range_rates_PRN2 range_rates_PRN3...
     range_rates_PRN4 range_rates_PRN5 range_rates_PRN6 range_rates_PRN7...
     range_rates_PRN8 range_rates_PRN9 range_rates_PRN10 range_rates_PRN11...
     range_rates_PRN12];
+
+figure(4)
+plot(range_rates_PRN02)
+title('Range-rates for PRN02')
+xlabel('Number of Observations')
+ylabel('Range-rates [m/s]')
+
+% Doppler Computation
+f0 = 1575.42 * 10^(6);
+c = 299792458;
