@@ -1,43 +1,10 @@
 %% GNSS labs Group2: lab5
-% Main code would come here
-
-
-%% ------------------ GPS timestamps to seconds ---------------------------
 clear all
 close all
 clc
 
-gps_week = 1499; % gps week
-
-start_gps = 259263.5750014; % gps sec of week of data start
-sat_1_gps = 259267.5750014; % gps sec of week acquisition of first satellite
-TTFF_gps = 259759.5792914; % gps sec of week of TTFF
-
-% conversion to year, month and decimal day
-[yr_start, mn_start, dy_start]= jd2cal(gps2jd(gps_week,start_gps,0))
-[yr_sat_1, mn_sat_1, dy_sat_1]= jd2cal(gps2jd(gps_week,sat_1_gps,0))
-[yr_TTFF, mn_TTFF, dy_TTFF]= jd2cal(gps2jd(gps_week,TTFF_gps,0))
-
-% time in seconds of acquisition of the first satellite
-Sat_1_seconds = (dy_sat_1 - dy_start)*86400;
-
-% time in seconds of TTFF
-TTFF_seconds = (dy_TTFF - dy_start)*86400;
-
-% sampling rate
-first = 259263.5750014;
-second = 259264.5750014;
-[yr,mn,dy]= jd2cal(gps2jd(gps_week,first,0));
-[yr2,mn2,dy2]= jd2cal(gps2jd(gps_week,second,0));
-Rate = (dy2 - dy)*86400
-
-%% ------------------- reading text file ---------------------------------
-clear all
-close all
-clc
-
-fid = fopen('GNSSlab_B.txt');
-
+%% ------------------------- reading text file ----------------------------
+fid = fopen('GNSSlab_B_new.txt');
 tline = fgetl(fid);
 tlines = cell(0,1);
 while ischar(tline)
@@ -46,7 +13,7 @@ while ischar(tline)
 end
 fclose(fid);
 
-% Find the tlines with F40, F80, F62
+% Find the tlines with F40, F80, F62 messages
 messLines_40 = regexp(tlines,'F40','match','once');
 eqnLineMask_40 = ~cellfun(@isempty, messLines_40);
 F_40 = tlines(eqnLineMask_40==1);
@@ -60,40 +27,38 @@ eqnLineMask_80 = ~cellfun(@isempty, messLines_80);
 F_80 = tlines(eqnLineMask_80==1);
 
 % extract columns of interest 
-gps_week = extractBetween(F_40,5,8); % gps week for example
-
 No_tracked_sats = extractBetween(F_40,97,97); % tracked satellites
 sats = str2double(No_tracked_sats);
 
 figure(1)
 histogram(sats)
-title('Number of Tracked Satellites')
+title('Number of Tracked Satellites (whole data set)')
 xlabel('Number of Satellites')
 ylabel('Number of Occurence')
+xlim([-0.5 9.5]);
 
-%% ------------ splitting the data set into two periods ----------------
-% period 1: before reinitialization
-% period 2: sfter reinitialization
-
+%% -------------- splitting the data set into two periods -----------------
 initialization = regexp(F_40,'14.2000014','match','once');
 init = str2double(initialization);
 ix = find(init==14.2000014);
 
-figure(1)
-period_1_sats = sats(ix(1):ix(2));
+figure(2)
+period_1_sats = sats(1:ix(1)); % period 1:before reinitialization
 histogram(period_1_sats)
 title('Number of Tracked Satellites - Period 1')
 xlabel('Number of Satellites')
 ylabel('Number of Occurence')
+xlim([-0.5 9.5]);
 
-figure(2)
-period_2_sats = sats(ix(2):length(sats));
+figure(3)
+period_2_sats = sats(ix(1):length(sats)); % period 2:after reinitialization
 histogram(period_2_sats)
 title('Number of Tracked Satellites - Period 2')
 xlabel('Number of Satellites')
 ylabel('Number of Occurence')
+xlim([-0.5 9.5]);
 
-%% ------------ range rates ----------------
+%% --------------------------- Range rates --------------------------------
 range_rates_ch1 = str2double(extractBetween(F_62(22:length(F_62)),64,73));
 range_rates_ch2 = str2double(extractBetween(F_62(22:length(F_62)),111,120));
 range_rates_ch3 = str2double(extractBetween(F_62(22:length(F_62)),158,167));
@@ -112,8 +77,53 @@ range_rates = [range_rates_ch1 range_rates_ch2 range_rates_ch3...
     range_rates_ch8 range_rates_ch9 range_rates_ch10 range_rates_ch11...
     range_rates_ch12];
 
+%% ---------------------- PRNs in each channel ----------------------------
+PRNs_ch1 = str2double(extractBetween(F_62(22:length(F_62)),35,37));
+PRNs_ch2 = str2double(extractBetween(F_62(22:length(F_62)),82,84));
+PRNs_ch3 = str2double(extractBetween(F_62(22:length(F_62)),129,131));
+PRNs_ch4 = str2double(extractBetween(F_62(22:length(F_62)),176,178));
+PRNs_ch5 = str2double(extractBetween(F_62(22:length(F_62)),223,225));
+PRNs_ch6 = str2double(extractBetween(F_62(22:length(F_62)),270,272));
+PRNs_ch7 = str2double(extractBetween(F_62(22:length(F_62)),317,319));
+PRNs_ch8 = str2double(extractBetween(F_62(22:length(F_62)),364,366));
+PRNs_ch9 = str2double(extractBetween(F_62(22:length(F_62)),411,413));
+PRNs_ch10 = str2double(extractBetween(F_62(22:length(F_62)),458,460));
+PRNs_ch11 = str2double(extractBetween(F_62(22:length(F_62)),505,507));
+PRNs_ch12 = str2double(extractBetween(F_62(22:length(F_62)),552,554));
+
+PRNs = [PRNs_ch1 PRNs_ch2 PRNs_ch3 PRNs_ch4 PRNs_ch5 PRNs_ch6 PRNs_ch7...
+    PRNs_ch8 PRNs_ch9 PRNs_ch10 PRNs_ch11 PRNs_ch12];
+
+
+%% ---------- plotting specific PRNs in specific channels -----------------
 figure(4)
-plot(range_rates_ch2)
-title('Range-rates for Channel 2')
+plot(range_rates_ch1(find(PRNs_ch1==19)))
+title('Range-rates for PRN 19 - Channel 1')
 xlabel('Number of Observations')
 ylabel('Range-rates [m/s]')
+
+figure(5)
+plot(range_rates_ch1(find(PRNs_ch1==7)))
+title('Range-rates for PRN 07 - Channel 1')
+xlabel('Number of Observations')
+ylabel('Range-rates [m/s]')
+
+figure(6)
+plot(range_rates_ch1(find(PRNs_ch2==23)))
+title('Range-rates for PRN 23 - Channel 2')
+xlabel('Number of Observations')
+ylabel('Range-rates [m/s]')
+
+figure(7)
+plot(range_rates_ch1(find(PRNs_ch3==21)))
+title('Range-rates for PRN 21 - Channel 2')
+xlabel('Number of Observations')
+ylabel('Range-rates [m/s]')
+%% ------------------------ Peak Doppler Shifts ---------------------------
+Peak_Dopplers = max(range_rates); % in m/s
+%% --------------------- Line-of-sight accelerations ----------------------
+LOS = diff(range_rates);
+Peak_LOS = max(LOS);
+%% -------------- Jerk values (derivative of acceleration) ---------------- 
+Jerk = diff(LOS);
+Peak_Jerk = max(Jerk);
