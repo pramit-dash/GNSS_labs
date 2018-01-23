@@ -4,7 +4,7 @@ close all
 clc
 
 %% ------------------------- reading text file ----------------------------
-fid = fopen('GNSSlab_B_new.txt');
+fid = fopen('GNSSlab_B_corrected.txt');
 tline = fgetl(fid);
 tlines = cell(0,1);
 while ischar(tline)
