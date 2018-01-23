@@ -127,3 +127,70 @@ Peak_LOS = max(LOS);
 %% -------------- Jerk values (derivative of acceleration) ---------------- 
 Jerk = diff(LOS);
 Peak_Jerk = max(Jerk);
+
+%% ---------- Extracting Position and Velocity from F40 & F80 -------------
+
+time_stamps_40 = str2double(extractBetween(F_40,5,23)); 
+time_stamps_40_1 = time_stamps_40(1:ix,:);
+
+time_stamps_80 = str2double(extractBetween(F_80,5,23)); 
+time_stamps_80_1 = time_stamps_80(1:ix,:);
+
+% ---------------------------- position -----------------------------------
+x_40 = extractBetween(F_40,24,35); 
+y_40 = extractBetween(F_40,36,47);
+z_40 = extractBetween(F_40,48,59); 
+Pos_40 = str2double([x_40 y_40 z_40]);
+Pos_40_1 = Pos_40(1:ix,:);
+
+x_80 = extractBetween(F_80,24,35);
+y_80 = extractBetween(F_80,36,47); 
+z_80 = extractBetween(F_80,48,59); 
+Pos_80 = str2double([x_80 y_80 z_80]);
+Pos_80_1 = Pos_80(1:ix,:);
+
+[timestamps,iA,iB] = intersect(time_stamps_40_1,time_stamps_80_1); 
+Pos_40_new = Pos_40(iA,:);
+Pos_80_new = Pos_80(iB,:);
+
+figure(9)
+plot(Pos_40_new)
+
+figure(10)
+plot(Pos_80_new)
+
+% ---------------------------- velocity -----------------------------------
+vx_40 = extractBetween(F_40,60,71); 
+vy_40 = extractBetween(F_40,72,83); 
+vz_40 = extractBetween(F_40,84,95); 
+Vel_40 = str2double([vx_40 vy_40 vz_40]);
+Vel_40_1 = Vel_40(1:ix,:);
+
+vx_80 = extractBetween(F_80,60,71); 
+vy_80 = extractBetween(F_80,72,83); 
+vz_80 = extractBetween(F_80,84,95); 
+Vel_80 = str2double([vx_80 vy_80 vz_80]);
+Vel_80_1 = Vel_80(1:ix,:);
+
+[~,iA,iB] = intersect(time_stamps_40_1,time_stamps_80_1); 
+Vel_40_new = Vel_40(iA,:);
+Vel_80_new = Vel_80(iB,:);
+
+figure(9)
+plot(Vel_40_new)
+
+figure(10)
+plot(Vel_80_new)
+
+% ----------------------- position error ----------------------------------
+% F80 is given later, (it is 0.00 while F40 has values, so the first values
+% are being ignored)
+Pos_error = Pos_80_new(532:end,:) - Pos_40_new(532:end,:);
+figure(11)
+plot(timestamps(532:end),Pos_error)
+
+
+% ----------------------- velocity error ----------------------------------
+Vel_error = Vel_80_new(532:end,:) - Vel_40_new(532:end,:);
+figure(12)
+plot(timestamps(532:end),Vel_error)
