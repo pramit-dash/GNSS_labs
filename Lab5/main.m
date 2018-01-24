@@ -152,8 +152,11 @@ Pos_80_1 = Pos_80(1:ix,:);
 [timestamps,iA,iB] = intersect(time_stamps_40_1,time_stamps_80_1); 
 Pos_40_new = Pos_40(iA,:); 
 Pos_40_new = Pos_40_new(any(Pos_40_new,2),:); %remove zeros
+timestamps = timestamps(any(Pos_40_new,2),:);
+
 Pos_80_new = Pos_80(iB,:);
 Pos_80_new = Pos_80_new(any(Pos_80_new,2),:); %remove zeros
+timestamps = timestamps(any(Pos_80_new,2),:);
 
 figure(9)
 plot3(Pos_40_new(:,1),Pos_40_new(:,2),Pos_40_new(:,3))
@@ -186,3 +189,16 @@ plot(Vel_40_new)
 
 figure(10)
 plot(Vel_80_new)
+
+% ----------------------- position error ----------------------------------
+% F80 is given later, (it is 0.00 while F40 has values, so the first values
+% are being ignored)
+Pos_error = Pos_80_new - Pos_40_new(16:end,:);
+figure(11)
+plot(timestamps,Pos_error)
+
+
+% ----------------------- velocity error ----------------------------------
+Vel_error = Vel_80_new - Vel_40_new(16:end,:);
+figure(12)
+plot(timestamps,Vel_error);
