@@ -202,3 +202,43 @@ plot(timestamps,Pos_error)
 Vel_error = Vel_80_new - Vel_40_new(16:end,:);
 figure(12)
 plot(timestamps,Vel_error);
+
+%% ---------------------- Earth-fixed to RTN ------------------------------
+omega = [0; 0; 2*pi/86164]';
+
+% ------------------------------- F40 -------------------------------------
+v_prime = Vel_40_new + omega.*Pos_40_new; %???? cross product?
+
+eR = Pos_40_new / norm(Pos_40_new);
+eN = cross(Pos_40_new,v_prime) / norm(cross(Pos_40_new,v_prime));
+eT = cross(eR,eN);
+
+rRTN_40 = eR.*Pos_40_new+eT.*Pos_40_new+eN.*Pos_40_new;
+vRTN_40 = eR.*Vel_40_new+eT.*Vel_40_new+eN.*Vel_40_new;
+
+% ------------------------------- F480 -------------------------------------
+v_prime = Vel_80_new + omega.*Pos_80_new; %???? cross product?
+
+eR = Pos_80_new / norm(Pos_80_new);
+eN = cross(Pos_80_new,v_prime) / norm(cross(Pos_80_new,v_prime));
+eT = cross(eR,eN);
+
+rRTN_80 = eR.*Pos_80_new+eT.*Pos_80_new+eN.*Pos_80_new;
+vRTN_80 = eR.*Vel_80_new+eT.*Vel_80_new+eN.*Vel_80_new;
+
+% -------------------- Position Error in RTN ------------------------------
+Pos_Error_RTN = rRTN_80 - rRTN_40(16:end,:);
+figure(13)
+plot(timestamps,Pos_Error_RTN)
+title('Position Error in RTN')
+xlabel('GPS time')
+ylabel('Position Error (m)')
+grid on
+% -------------------- Velocity Error in RTN ------------------------------
+Vel_Error_RTN = vRTN_80 - vRTN_40(16:end,:);
+figure(14)
+plot(timestamps,Vel_Error_RTN)
+title('Velocity Error in RTN')
+xlabel('GPS time')
+ylabel('Velocity Error (m/s)')
+grid on
