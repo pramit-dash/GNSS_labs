@@ -150,14 +150,16 @@ Pos_80 = str2double([x_80 y_80 z_80]);
 Pos_80_1 = Pos_80(1:ix,:);
 
 [timestamps,iA,iB] = intersect(time_stamps_40_1,time_stamps_80_1); 
-Pos_40_new = Pos_40(iA,:);
+Pos_40_new = Pos_40(iA,:); 
+Pos_40_new = Pos_40_new(any(Pos_40_new,2),:); %remove zeros
 Pos_80_new = Pos_80(iB,:);
+Pos_80_new = Pos_80_new(any(Pos_80_new,2),:); %remove zeros
 
 figure(9)
-plot(Pos_40_new)
+plot3(Pos_40_new(:,1),Pos_40_new(:,2),Pos_40_new(:,3))
 
 figure(10)
-plot(Pos_80_new)
+plot3(Pos_80_new(:,1),Pos_80_new(:,2),Pos_80_new(:,3))
 
 % ---------------------------- velocity -----------------------------------
 vx_40 = extractBetween(F_40,60,71); 
@@ -174,23 +176,13 @@ Vel_80_1 = Vel_80(1:ix,:);
 
 [~,iA,iB] = intersect(time_stamps_40_1,time_stamps_80_1); 
 Vel_40_new = Vel_40(iA,:);
+Vel_40_new = Vel_40_new(any(Vel_40_new,2),:); %remove zeros
+
 Vel_80_new = Vel_80(iB,:);
+Vel_80_new = Vel_80_new(any(Vel_80_new,2),:); %remove zeros
 
 figure(9)
 plot(Vel_40_new)
 
 figure(10)
 plot(Vel_80_new)
-
-% ----------------------- position error ----------------------------------
-% F80 is given later, (it is 0.00 while F40 has values, so the first values
-% are being ignored)
-Pos_error = Pos_80_new(532:end,:) - Pos_40_new(532:end,:);
-figure(11)
-plot(timestamps(532:end),Pos_error)
-
-
-% ----------------------- velocity error ----------------------------------
-Vel_error = Vel_80_new(532:end,:) - Vel_40_new(532:end,:);
-figure(12)
-plot(timestamps(532:end),Vel_error)
